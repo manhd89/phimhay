@@ -64,31 +64,37 @@ document.addEventListener('DOMContentLoaded', () => {
   function displayEpisodeList(episodes, slug, currentServerIndex, currentEpisodeSlug) {
     episodeListContainer.innerHTML = '';
 
-    // Server selector
-    const serverDropdown = document.createElement('div');
-    serverDropdown.className = 'btn-group mb-3';
-    serverDropdown.innerHTML = `
-      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Server: ${episodes[currentServerIndex].server_name}
-      </button>
-      <ul class="dropdown-menu">
-        ${episodes.map((server, index) => `
-          <li><a class="dropdown-item ${index === currentServerIndex ? 'active' : ''}" href="#" data-server-index="${index}">${server.server_name}</a></li>
-        `).join('')}
-      </ul>
-    `;
-    episodeListContainer.appendChild(serverDropdown);
+    // Kiểm tra số lượng server để quyết định có hiển thị dropdown không
+    const hasMultipleServers = episodes.length > 1;
 
-    // Server switching
-    const dropdownItems = serverDropdown.querySelectorAll('.dropdown-item');
-    dropdownItems.forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.preventDefault();
-        const newServerIndex = parseInt(e.target.dataset.serverIndex);
-        const newEpisodeSlug = episodes[newServerIndex].server_data[0].slug;
-        window.location.href = `watch.html?server=${newServerIndex}&tap=${newEpisodeSlug}&slug=${slug}`;
+    if (hasMultipleServers) {
+      // Server selector (dropdown)
+      const serverDropdown = document.createElement('div');
+      serverDropdown.className = 'btn-group mb-3';
+      serverDropdown.innerHTML = `
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Server: ${episodes[currentServerIndex].server_name}
+        </button>
+        <ul class="dropdown-menu">
+          ${episodes.map((server, index) => `
+            <li><a class="dropdown-item ${index === currentServerIndex ? 'active' : ''}" href="#" data-server-index="${index}">${server.server_name}</a></li>
+          `).join('')}
+        </ul>
+      `;
+      episodeListContainer.appendChild(serverDropdown);
+
+      // Xử lý chuyển server
+      const dropdownItems = serverDropdown.querySelectorAll('.dropdown-item');
+      dropdownItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          const newServerIndex = parseInt(e.target.dataset.serverIndex);
+          // Chuyển sang tập đầu tiên của server mới
+          const newEpisodeSlug = episodes[newServerIndex].server_data[0].slug;
+          window.location.href = `watch.html?server=${newServerIndex}&tap=${newEpisodeSlug}&slug=${slug}`;
+        });
       });
-    });
+    }
 
     // Episode list
     const episodeButtons = document.createElement('div');
