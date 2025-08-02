@@ -39,28 +39,18 @@ document.addEventListener('DOMContentLoaded', () => {
           <a class="btn btn-success mb-3" id="watch-first-ep" href="#">
             <i class="bi bi-play-fill"></i> Xem phim
           </a>
-          <h5 class="text-white">Tập phim</h5>
-          <div id="episode-buttons" class="d-flex flex-wrap gap-2"></div>
         </div>
       </div>
     `;
     movieDetailContainer.innerHTML = html;
 
-    const episodeContainer = document.getElementById('episode-buttons');
-    if (movie.episodes.length > 0) {
-      movie.episodes[0].server_data.forEach((episode) => {
-        const epBtn = document.createElement('a');
-        epBtn.className = 'btn btn-outline-light';
-        epBtn.href = `watch.html?server=0&tap=${episode.slug}&slug=${movie.slug}`;
-        epBtn.textContent = episode.name;
-        episodeContainer.appendChild(epBtn);
-      });
-
-      const watchBtn = document.getElementById('watch-first-ep');
+    const watchBtn = document.getElementById('watch-first-ep');
+    if (movie.episodes.length > 0 && movie.episodes[0].server_data.length > 0) {
       const firstEp = movie.episodes[0].server_data[0];
       watchBtn.href = `watch.html?server=0&tap=${firstEp.slug}&slug=${movie.slug}`;
     } else {
-      episodeContainer.innerHTML = '<p class="text-white">Không có dữ liệu tập phim.</p>';
+      // Ẩn nút xem phim nếu không có tập nào
+      watchBtn.style.display = 'none';
     }
   }
 
