@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchResultList = document.getElementById('searchResultList');
   const searchTitle = document.getElementById('search-title');
   const noResultsMessage = document.getElementById('no-results');
-  
+
   // Vẫn cần API_DOMAIN_CDN_IMAGE vì URL trong API này là tương đối
   const API_DOMAIN_CDN_IMAGE = 'https://phimimg.com/';
 
@@ -64,11 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
           movieTypeLabel = 'Không xác định';
           break;
       }
-      
+
       movieCard.innerHTML = `
         <a href="movie.html?slug=${movie.slug}" class="text-decoration-none text-white">
           <div class="card h-100 bg-dark text-white border-secondary">
             <img src="${API_DOMAIN_CDN_IMAGE}${movie.poster_url}" class="card-img-top" alt="${movie.name}">
+            <div class="watch-banner">
+              <i class="bi bi-play-fill"></i> Xem ngay
+            </div>
             <div class="card-body d-flex flex-column">
               <h5 class="card-title text-truncate">${movie.name}</h5>
               <p class="card-text text-truncate text-muted">${movie.origin_name}</p>
