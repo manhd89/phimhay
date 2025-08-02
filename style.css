@@ -114,3 +114,33 @@ main {
   background-color: #495057;
   color: #fff;
 }
+
+/* Thêm các style dưới đây vào file style.css của bạn */
+
+/* Để định vị banner chính xác, cần set position: relative cho phần tử cha */
+.card {
+  position: relative;
+  overflow: hidden; /* Đảm bảo banner không bị tràn ra ngoài card */
+}
+
+/* Style cho banner "Xem ngay" */
+.watch-banner {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.75); /* Nền đen trong suốt */
+  color: #fff;
+  padding: 5px 10px;
+  border-top-left-radius: 8px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Khoảng cách giữa icon và chữ */
+  transform: translateY(100%); /* Ẩn banner ban đầu */
+  transition: transform 0.3s ease-in-out; /* Tạo hiệu ứng chuyển động mượt mà */
+}
+
+/* Hiển thị banner khi hover vào poster */
+.card:hover .watch-banner {
+  transform: translateY(0);
+}
