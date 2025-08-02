@@ -2,8 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchResultList = document.getElementById('searchResultList');
   const searchTitle = document.getElementById('search-title');
   const noResultsMessage = document.getElementById('no-results');
-
-  // Vẫn cần API_DOMAIN_CDN_IMAGE vì URL trong API này là tương đối
+  
   const API_DOMAIN_CDN_IMAGE = 'https://phimimg.com/';
 
   async function performSearch() {
@@ -45,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const movieCard = document.createElement('div');
       movieCard.className = 'col';
 
-      // Xác định loại phim chính xác dựa trên thuộc tính 'type' của API này
       let movieTypeLabel = '';
       switch (movie.type) {
         case 'single':
@@ -64,24 +62,24 @@ document.addEventListener('DOMContentLoaded', () => {
           movieTypeLabel = 'Không xác định';
           break;
       }
-
+      
       movieCard.innerHTML = `
-        <a href="movie.html?slug=${movie.slug}" class="text-decoration-none text-white">
-          <div class="card h-100 bg-dark text-white border-secondary">
+        <div class="card h-100 bg-dark text-white border-secondary">
+          <a href="movie.html?slug=${movie.slug}" class="text-decoration-none text-white movie-poster-container">
             <img src="${API_DOMAIN_CDN_IMAGE}${movie.poster_url}" class="card-img-top" alt="${movie.name}">
-            <div class="watch-banner">
+            <a href="watch.html?server=0&tap=full&slug=${movie.slug}" class="watch-banner">
               <i class="bi bi-play-fill"></i> Xem ngay
-            </div>
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title text-truncate">${movie.name}</h5>
-              <p class="card-text text-truncate text-muted">${movie.origin_name}</p>
-              <div class="mt-auto d-flex justify-content-between align-items-center">
-                <small class="text-success">${movie.year}</small>
-                <small class="badge bg-danger">${movieTypeLabel}</small>
-              </div>
+            </a>
+          </a>
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-truncate">${movie.name}</h5>
+            <p class="card-text text-truncate text-muted">${movie.origin_name}</p>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <small class="text-success">${movie.year}</small>
+              <small class="badge bg-danger">${movieTypeLabel}</small>
             </div>
           </div>
-        </a>
+        </div>
       `;
       searchResultList.appendChild(movieCard);
     });
