@@ -1,9 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const movieList = document.getElementById('movieList');
   const paginationContainer = document.getElementById('pagination');
-  
-  // Không cần API_DOMAIN_CDN_IMAGE vì URL đã đầy đủ
-  // const API_DOMAIN_CDN_IMAGE = 'https://phimimg.com/';
 
   // Get current page from URL or default to 1
   const urlParams = new URLSearchParams(window.location.search);
@@ -32,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Xác định loại phim chính xác dựa trên thuộc tính 'type' của API này
       let movieTypeLabel = '';
-      switch (movie.tmdb.type) { // Sử dụng movie.tmdb.type
+      switch (movie.tmdb.type) {
         case 'movie':
           movieTypeLabel = 'Phim lẻ';
           break;
@@ -48,6 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <a href="movie.html?slug=${movie.slug}" class="text-decoration-none text-white">
           <div class="card h-100 bg-dark text-white border-secondary">
             <img src="${movie.poster_url}" class="card-img-top" alt="${movie.name}">
+            <div class="watch-banner">
+              <i class="bi bi-play-fill"></i> Xem ngay
+            </div>
             <div class="card-body d-flex flex-column">
               <h5 class="card-title text-truncate">${movie.name}</h5>
               <p class="card-text text-truncate text-muted">${movie.origin_name}</p>
