@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const movieList = document.getElementById('movieList');
   const paginationContainer = document.getElementById('pagination');
-
-  // Get current page from URL or default to 1
+  
   const urlParams = new URLSearchParams(window.location.search);
   let currentPage = parseInt(urlParams.get('page')) || 1;
 
@@ -27,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const movieCard = document.createElement('div');
       movieCard.className = 'col';
 
-      // Xác định loại phim chính xác dựa trên thuộc tính 'type' của API này
       let movieTypeLabel = '';
       switch (movie.tmdb.type) {
         case 'movie':
@@ -42,22 +40,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       movieCard.innerHTML = `
-        <a href="movie.html?slug=${movie.slug}" class="text-decoration-none text-white">
-          <div class="card h-100 bg-dark text-white border-secondary">
+        <div class="card h-100 bg-dark text-white border-secondary">
+          <a href="movie.html?slug=${movie.slug}" class="text-decoration-none text-white movie-poster-container">
             <img src="${movie.poster_url}" class="card-img-top" alt="${movie.name}">
-            <div class="watch-banner">
+            <a href="watch.html?server=0&tap=full&slug=${movie.slug}" class="watch-banner">
               <i class="bi bi-play-fill"></i> Xem ngay
-            </div>
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title text-truncate">${movie.name}</h5>
-              <p class="card-text text-truncate text-muted">${movie.origin_name}</p>
-              <div class="mt-auto d-flex justify-content-between align-items-center">
-                <small class="text-success">${movie.year}</small>
-                <small class="badge bg-danger">${movieTypeLabel}</small>
-              </div>
+            </a>
+          </a>
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-truncate">${movie.name}</h5>
+            <p class="card-text text-truncate text-muted">${movie.origin_name}</p>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <small class="text-success">${movie.year}</small>
+              <small class="badge bg-danger">${movieTypeLabel}</small>
             </div>
           </div>
-        </a>
+        </div>
       `;
       movieList.appendChild(movieCard);
     });
@@ -68,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const { currentPage, totalPages } = pagination;
     const maxPagesToShow = 5;
 
-    // Previous button
     const prevItem = document.createElement('li');
     prevItem.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
     prevItem.innerHTML = `<a class="page-link" href="?page=${currentPage - 1}">Trước</a>`;
@@ -81,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
       startPage = Math.max(1, endPage - maxPagesToShow + 1);
     }
 
-    // Page numbers
     for (let i = startPage; i <= endPage; i++) {
       const pageItem = document.createElement('li');
       pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
@@ -89,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
       paginationContainer.appendChild(pageItem);
     }
 
-    // Next button
     const nextItem = document.createElement('li');
     nextItem.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
     nextItem.innerHTML = `<a class="page-link" href="?page=${currentPage + 1}">Sau</a>`;
