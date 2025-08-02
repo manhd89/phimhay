@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const movieList = document.getElementById('movieList');
   const paginationContainer = document.getElementById('pagination');
-  
+
   const urlParams = new URLSearchParams(window.location.search);
   let currentPage = parseInt(urlParams.get('page')) || 1;
 
@@ -40,15 +40,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       movieCard.innerHTML = `
-        <div class="card h-100 bg-dark text-white border-secondary">
-          <a href="movie.html?slug=${movie.slug}" class="text-decoration-none text-white movie-poster-container">
-            <img src="${movie.poster_url}" class="card-img-top" alt="${movie.name}">
-            <a href="watch.html?server=0&tap=full&slug=${movie.slug}" class="watch-banner">
-              <i class="bi bi-play-fill"></i> Xem ngay
-            </a>
+        <div class="card h-100">
+          <a href="movie.html?slug=${movie.slug}" class="text-decoration-none text-white d-block h-100">
+            <div class="movie-poster-container">
+              <img src="${movie.poster_url}" class="card-img-top" alt="${movie.name}">
+              <a href="watch.html?server=0&tap=full&slug=${movie.slug}" class="watch-banner" onclick="event.stopPropagation();">
+                <i class="bi bi-play-fill"></i> Xem ngay
+              </a>
+            </div>
           </a>
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title text-truncate">${movie.name}</h5>
+          <div class="card-body">
+            <h5 class="card-title">${movie.name}</h5>
             <p class="card-text text-truncate text-muted">${movie.origin_name}</p>
             <div class="mt-auto d-flex justify-content-between align-items-center">
               <small class="text-success">${movie.year}</small>
@@ -62,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function displayPagination(pagination) {
+    // ... (logic phân trang không thay đổi)
     paginationContainer.innerHTML = '';
     const { currentPage, totalPages } = pagination;
     const maxPagesToShow = 5;
